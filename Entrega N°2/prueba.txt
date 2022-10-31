@@ -1,1 +1,0 @@
-[{"nombre":"Fran","precio":12,"id":1}]
