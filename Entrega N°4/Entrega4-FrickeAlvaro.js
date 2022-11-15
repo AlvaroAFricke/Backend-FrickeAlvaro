@@ -21,7 +21,6 @@ class Contenedor {
             let array = JSON.parse(fs.readFileSync(`./${this.archivo}`, "utf-8"));
             return array;
         } catch (error) {
-            console.log("Error en la lectura.");
             throw new Error("Error en la lectura.");
         }
     }
@@ -116,11 +115,12 @@ function validacion(req, res, next){
     if (isNaN(num)){
         return res.json({error:'El parametro no es un numero.'})
     }
-    if ((num < 1) && (num > prods.getAll().length)){
+    if (num < 1){
         return res.json({error:'Parametro fuera de rango.'})
     }
-
-    console.log('Todo okey por aca')
+    if (num > prods.getAll().length){
+        return res.json({error:'Parametro fuera de rango.'})
+    }
 
     next()
 }
@@ -148,6 +148,8 @@ routerProductos.post('/', (req, res) => {
 
 routerProductos.put('/:id', validacion, (req, res) => {
     
+
+
 })
 
 //Delete
