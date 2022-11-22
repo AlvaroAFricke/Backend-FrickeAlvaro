@@ -1,0 +1,8 @@
+Ejs = Sintaxis complicada aunque lo mas semejante a un js incrustado en html. Documentacion basada en stackoverflow
+
+Handlebars = Similar a Ejs en todo aspecto pero con una sintaxis distinta
+
+Pug = Es como aprender otro lenguaje de programacion desde 0, por eso esta descartado, aunque con tiempo posiblemente sea el de codigo mas claro y limpio de leer.
+    Menos conocido, no se encontraria tan facil un error 
+
+Complicado elegir porque realmente no me gusto el uso de estos motores, me quedo con Handlebars porque son mas lindos las llaves y porque es el mas utilizado de cara a solucionar problemas

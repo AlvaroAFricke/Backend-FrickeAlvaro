@@ -1,0 +1,16 @@
+h2(style='color:crimson;') Historial
+ - if(productos.length &gt; 0)
+.table-responsive
+  table.table.table-dark
+  - each producto, producto in productos
+        tr(style='color: yellow;')
+          th Nombre
+          th Precio
+          th Imagen
+        tr
+        td persona.nombre
+        td producto.precio
+        td producto.imagen
+ - else
+h3.alert.alert-danger No hay productos
+

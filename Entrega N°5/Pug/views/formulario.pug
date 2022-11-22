@@ -1,0 +1,16 @@
+h1(style='color:blue;') Ingrese datos
+br
+form(action='/personas' method='post')
+  .form-group
+    label(for='nombre')
+      b Nombre
+    input#nombre.form-control(type='text' name='nombre')
+  .form-group
+    label(for='precio')
+      b Precio
+    input#precio.form-control(type='number' name='precio')
+  .form-group
+    label(for='imagen')
+      b Imagen
+    input#imagen.form-control(name='imagen')
+  button.btn.btn-success.mt-3.mb-5 Enviar
