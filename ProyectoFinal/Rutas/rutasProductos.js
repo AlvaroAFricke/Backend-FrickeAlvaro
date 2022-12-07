@@ -36,7 +36,7 @@ routerProductos.get("/:id?", (req, res) => {
 
     const id = parseInt(req.params.id);
     if (id) {
-        res.json(productos.find((ele) => (ele.id == id)));
+        res.json(productos.find((prod) => (prod.id == id)));
     } else {
         res.json(productos);
     }
@@ -62,7 +62,7 @@ routerProductos.post("/", admin, (req, res) => {
 
 routerProductos.put("/:id", admin, (req, res) => {
 
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id); //Para que reconozca que el id es un numero
     const producto = productos.find( prod => prod.id == id )
 
     producto.nombre = req.body.nombre;
@@ -80,8 +80,8 @@ routerProductos.put("/:id", admin, (req, res) => {
 
 routerProductos.delete("/:id", admin, (req, res) => {
 
-    const id = parseInt(req.params.id);
-    productos = productos.filter((item) => item.id !== id)
+    const id = parseInt(req.params.id); //Para que reconozca que el id es un numero
+    productos = productos.filter((prod) => prod.id !== id)
 
     archivador.Save(productos);
 

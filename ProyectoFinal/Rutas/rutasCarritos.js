@@ -1,14 +1,14 @@
+//Imports
 const express = require("express");
 const { Router } = express;
 const Archivador = require("../Js/Archivador");
 const Carrito = require("../Js/Carrito");
-const Producto = require("../Js/Producto");
 
 const app = express();
 
+//Usos de la App
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 
 const archivador = new Archivador();
 const routerCarrito = new Router();
@@ -23,12 +23,16 @@ let carritos = new Array();
 
 routerCarrito.get("/:id/productos", (req, res) => {
 
-    const id = parseInt(req.params.id);
-    const carro = carritos.find( ele => ele.id == id )
+    const id = parseInt(req.params.id); //Para que reconozca que el id es un numero
+    const carro = carritos.find( carr => carr.id == id )
 
     res.json(carro.productos);
 
 });
+
+/**
+ * Debe ejecutarse este POST antes de poder hacer la alta o bajas de productos
+ */
 
 routerCarrito.post("/", (req, res) => {
 
@@ -40,9 +44,10 @@ routerCarrito.post("/", (req, res) => {
 
 });
 
+//Agregado idCar, idProd Para diferenciar el carrito en caso que tenga mas de 1
 routerCarrito.post('/:idCar/productos/:idProd', (req,res) => {
 
-    const idCar = parseInt(req.params.idCar);
+    const idCar = parseInt(req.params.idCar); //Para que reconozca que el id es un numero
     const carrito = carritos.find( carr => carr.id == idCar ) 
 
     const productos = archivador.Read()
@@ -60,7 +65,7 @@ routerCarrito.post('/:idCar/productos/:idProd', (req,res) => {
 
 routerCarrito.delete("/:id/productos", (req, res) => {
 
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id); //Para que reconozca que el id es un numero
     carritos = carritos.filter((carr) => carr.id !== id)
 
     archivador.Save(carritos);
@@ -69,12 +74,13 @@ routerCarrito.delete("/:id/productos", (req, res) => {
 
 });
 
+//Defectuoso
 routerCarrito.delete('/:idCar/productos/:idProd', (req, res) => {
     
-    const idCar = parseInt(req.params.idCar);
+    const idCar = parseInt(req.params.idCar); //Para que reconozca que el id es un numero
     const carrito = carritos.find( carr => carr.id == idCar ) 
 
-    const idProd = parseInt(req.params.idProd);
+    const idProd = parseInt(req.params.idProd); //Para que reconozca que el id es un numero
 
     carrito.productos = carrito.productos.filter((prod) => prod.idProd !== idProd)
 
