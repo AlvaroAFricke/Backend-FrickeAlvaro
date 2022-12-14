@@ -83,4 +83,4 @@ class Contenedor {
 
 }
 
-module.exports.Contenedor = Contenedor;
+module.exports = Contenedor;

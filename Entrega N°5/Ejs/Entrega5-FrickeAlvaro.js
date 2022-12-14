@@ -62,7 +62,7 @@ routerProductos.get('/:id', validacion, (req, res) => {
 routerProductos.post('/', (req, res) => {
 
     prods.save(req.body)
-    res.json({Agregado:'Ok'})
+    res.redirect('/api/productos')
 
 })
 

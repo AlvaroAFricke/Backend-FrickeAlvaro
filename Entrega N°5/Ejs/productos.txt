@@ -1,1 +1,1 @@
-[]
+[{"nombre":"Banana","precio":"51","imagen":"2","id":1},{"nombre":"","precio":"","imagen":"","id":2}]
