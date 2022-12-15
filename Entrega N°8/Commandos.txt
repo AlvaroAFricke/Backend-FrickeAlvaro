@@ -1,0 +1,78 @@
+1-
+
+use ecommerce
+
+2-
+
+db.productos.insertMany([
+    {nombre: "Manzana", precio: 105, thumbnail:"Url"},
+    {nombre: "Banana", precio: 60, thumbnail:"Url"},
+    {nombre: "Ciruela", precio: 390, thumbnail:"Url"}
+    {nombre: "Anana", precio: 472, thumbnail:"Url"},
+    {nombre: "Melon", precio: 624, thumbnail:"Url"},
+    {nombre: "Sandia", precio: 1050, thumbnail:"Url"},
+    {nombre: "Naranja", precio: 99, thumbnail:"Url"},
+    {nombre: "Zapallo", precio: 233, thumbnail:"Url"},
+    {nombre: "Lechuga", precio: 287, thumbnail:"Url"},
+    {nombre: "Tomate", precio: 749, thumbnail:"Url"}
+])
+
+
+db.mensajes.insertMany([
+    {autor: "Alvaro", mensaje: "Hola a todos", fecha:"14/12/22 23:15:00"},
+    {autor: "Francisco", mensaje: "Buenas, como va?", fecha:"14/12/22 23:15:00"},
+    {autor: "Carla", mensaje: "Holis", fecha:"14/12/22 23:15:00"},
+    {autor: "Alvaro", mensaje: "Todo bien por aca", fecha:"14/12/22 23:15:00"},
+    {autor: "Renata", mensaje: "Aca andamos", fecha:"14/12/22 23:15:00"},
+    {autor: "Soledad", mensaje: "Todo bien", fecha:"14/12/22 23:15:00"},
+    {autor: "Mateo", mensaje: "Que ondaa", fecha:"14/12/22 23:15:00"},
+    {autor: "Carla", mensaje: "Que paso?", fecha:"14/12/22 23:15:00"},
+    {autor: "Francisco", mensaje: "Nada, todo bien", fecha:"14/12/22 23:15:00"},
+    {autor: "Alvaro", mensaje: "Bueno, menos mal", fecha:"14/12/22 23:15:00"}
+])
+
+
+
+3-
+
+db.productos.find()
+db.mensjaes.find()
+
+4-
+
+db.productos.countDocuments()    
+db.mensajes.countDocuments()   
+
+5-
+
+A)
+db.productos.insertOne({nombre: "Apio", precio: 316, thumbnail:"Url"})
+
+B)
+db.productos.find({precio: {$lt: 500}})
+
+C)
+db.productos.find({$and: [{precio: {$lte: 1000}}, {precio: {$gte: 500}}]})
+
+D)
+db.productos.find({precio: {$gt: 500}})
+
+E)
+db.productos.find().sort({precio: 1}).limit(1).skip(2)
+
+F)
+db.productos.updateMany({precio: {$gt: 0}}, {$set: {stock: 100}})
+
+G)
+db.productos.updateMany({precio: {$gte: 500}}, {$set: {stock: 0}})
+
+H)
+db.productos.deleteMany({precio: {$lte: 200}})
+
+I)
+
+use admin
+db.createUser({"user": "pepe", "pwd":"asd456", "roles": ["read"]})
+
+
+
