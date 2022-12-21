@@ -19,24 +19,44 @@ class Productos {
         }
     }
 
-    insertarArticulos(articulo) {
-        return this.knex('articulos').insert(articulo)
+    async insertarArticulos(articulo) {
+        try {
+            return await this.knex('articulos').insert(articulo)
+        } catch (error) {
+            console.log('Error en Insertar')
+        }
     }
 
-    listarArticulos() {
-        return this.knex('articulos').select('*')
+    async listarArticulos() {
+        try {
+            return await this.knex('articulos').select('*')
+        } catch (error) {
+            console.log('Error en Listar')
+        }
     }
 
-    borrarArticulos(id) {
-        return this.knex.from('articulos').where('id', '=', id).del()
+    async borrarArticulos(id) {
+        try {
+            return await this.knex.from('articulos').where('id', '=', id).del()
+        } catch (error) {
+            console.log('Error en Borrar')
+        }
     }
 
-    actualizarStock(stock, id) {
-        return this.knex.from("articulos").where('id', '=', id).update({stock: stock})
+    async actualizarStock(stock, id) {
+        try {
+            return await this.knex.from("articulos").where('id', '=', id).update({stock: stock})
+        } catch (error) {
+            console.log('Error en Actualizar')
+        }
     }
 
     close() {
-        this.knex.destroy()
+        try {
+            return this.knex.destroy()
+        } catch (error) {
+            console.log('Error en Close')
+        }
     }
 }
 

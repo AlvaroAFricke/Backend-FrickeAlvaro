@@ -18,9 +18,9 @@ formProducto.addEventListener('submit', (event) => {
     console.log("estoyEnFormProd")
 
     const producto = {
-        nombre: document.getElementById("nombre"),
-        precio: document.getElementById("precio"),
-        imagen: document.getElementById("imagen")
+        nombre: document.getElementById("nombre").value,
+        precio: document.getElementById("precio").value,
+        imagen: document.getElementById("imagen").value
     }
 
     socket.emit('nuevoProducto', producto)
@@ -46,19 +46,19 @@ formMensajes.addEventListener('submit', (event) => {
 
 }) 
 
-//Recibir y renderizar Mensajes
-socket.on('mensajes', (mensaje) =>{
+// //Recibir y renderizar Mensajes
+// socket.on('mensajes', (mensaje) =>{
 
-    const html = mensaje.map(msj => {
-        return `<div class="rounded col-3 text-break" style="background: gray">
-        <strong style="color: white">${msj.author}:</strong>
-        <em style="color: white">${msj.text}</em>
-        <br>
-        <em>${msj.date}</em>
-        </div>`
-    })
-    .join("<br>")
+//     const html = mensaje.map(msj => {
+//         return `<div class="rounded col-3 text-break" style="background: gray">
+//         <strong style="color: white">${msj.author}:</strong>
+//         <em style="color: white">${msj.text}</em>
+//         <br>
+//         <em>${msj.date}</em>
+//         </div>`
+//     })
+//     .join("<br>")
 
-    document.getElementById("mensajes").innerHTML = html
+//     document.getElementById("mensajes").innerHTML = html
 
-})
+// })

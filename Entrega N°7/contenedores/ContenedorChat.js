@@ -19,20 +19,36 @@ class Chats {
         }
     }
 
-    insertarMensaje(mensaje) {
-        return this.knex('mensajes').insert(mensaje)
+    async insertarMensaje(mensaje) {
+        try {
+            return await this.knex('mensajes').insert(mensaje)
+        } catch (error) {
+            console.log('Error en Insertar')
+        }
     }
 
-    listarMensaje() {
-        return this.knex('mensajes').select('*')
+    async listarMensaje() {
+        try {
+            return await this.knex('mensajes').select('*')
+        } catch (error) {
+            console.log('Error en Listar')
+        }
     }
 
-    borrarMensaje(id) {
-        return this.knex.from('mensajes').where('id', '=', id).del()
+    async borrarMensaje(id) {
+        try {
+            return await this.knex.from('mensajes').where('id', '=', id).del()
+        } catch (error) {
+            console.log('Error en Borrar')
+        }
     }
 
     close() {
-        this.knex.destroy()
+        try {
+            this.knex.destroy()
+        } catch (error) {
+            console.log('Error en Cerrar')
+        }
     }
 }
 
