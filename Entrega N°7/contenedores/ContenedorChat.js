@@ -27,7 +27,7 @@ class Chats {
         }
     }
 
-    async listarMensaje() {
+    async listarMensajes() {
         try {
             return await this.knex('mensajes').select('*')
         } catch (error) {

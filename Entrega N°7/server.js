@@ -24,6 +24,10 @@ const sqlMensajes = new Chat(options.sqlite)
 sqlProductos.crearTabla()
 sqlMensajes.crearTabla()
 
+app.get('/', (req, res) =>{
+    res.render('index')
+})
+
 io.on('connection', async (socket) =>{
     console.log('Conectado')
 
@@ -31,12 +35,12 @@ io.on('connection', async (socket) =>{
     socket.emit('productos', await sqlProductos.listarArticulos())
 
     //Enviar Mensajes
-    socket.emit('mensajes', await sqlMensajes.listarMensaje())
+    socket.emit('mensajes', await sqlMensajes.listarMensajes())
 
     //Recibir y actualizar Productos
     socket.on('nuevoProducto', async (producto) => {
         await sqlProductos.insertarArticulos(producto)
-        io.sockets.emit('producto', sqlProductos.listarArticulos())
+        io.sockets.emit('productos', sqlProductos.listarArticulos())
     })
 
     //Recibir y actualizar Mensajes

@@ -1,12 +1,12 @@
 const socket = io();
 
 
-//Recibir y renderizar Productos
-// socket.on('productos', (productos) =>{
+// Recibir y renderizar Productos
+socket.on('productos', (productos) =>{
 
-//     socket.render('./index.ejs', {productos})
+    console.log(productos)
 
-// })
+})
 
 //Enviar Producto, empaquetar e enviar al servidor
 const formProducto = document.getElementById("formularioProductos")
@@ -15,7 +15,7 @@ formProducto.addEventListener('submit', (event) => {
 
     event.preventDefault()
 
-    console.log("estoyEnFormProd")
+    console.log("Formulario Productos Completo")
 
     const producto = {
         nombre: document.getElementById("nombre").value,
@@ -34,7 +34,7 @@ formMensajes.addEventListener('submit', (event) => {
 
     event.preventDefault()
 
-    console.log("estoyEnFormMensa")
+    console.log("Formulario Mensaje Completo")
     
     const mensaje = {
         autor: document.getElementById("autor").value,
@@ -47,18 +47,19 @@ formMensajes.addEventListener('submit', (event) => {
 }) 
 
 // //Recibir y renderizar Mensajes
-// socket.on('mensajes', (mensaje) =>{
+socket.on('mensajes', async (mensajes) => {
 
-//     const html = mensaje.map(msj => {
-//         return `<div class="rounded col-3 text-break" style="background: gray">
-//         <strong style="color: white">${msj.author}:</strong>
-//         <em style="color: white">${msj.text}</em>
-//         <br>
-//         <em>${msj.date}</em>
-//         </div>`
-//     })
-//     .join("<br>")
+    console.log(mensajes)
 
-//     document.getElementById("mensajes").innerHTML = html
+    // const html = (Array).isArray(mensajes).map((msj) => {
+    //     return `<div class="rounded col-3 text-break" style="background: gray">
+    //     <strong style="color: white">${msj.author}:</strong>
+    //     <em style="color: white">${msj.text}</em>
+    //     <br>
+    //     <em>${msj.date}</em>
+    //     </div>`
+    // }).join("<br>")
 
-// })
+    // document.getElementById("mensajes").innerHTML = html
+
+})
