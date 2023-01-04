@@ -4,10 +4,8 @@ const models = require ('../Models/modelCarrito.js')
 class ContenedorCarritosMongo {
 
     constructor() {
-        this.URL = "mongodb+srv://alviafricke%4gmail.com%3<alvi481152>@clusteralvi.cahy3u5.mongodb.net/ecommerce?retryWrites=true&w=majority"
         mongoose.set({strictQuery:true})
-        this.connect = mongoose.createConnection(this.URL)
-        mongoose.connect(this.URL,{useNewUrlParser: true, useUnifiedTopology: true})
+        this.connect =  mongoose.connect('mongodb://localhost/ecommerce',{useNewUrlParser: true, useUnifiedTopology: true})
     }
 
     getAll() {

@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const routerCarrito = new Router();
 
-app.use("/api/carrito", routerCarrito);
+app.use("/api/carritos", routerCarrito);
 
 
 /**

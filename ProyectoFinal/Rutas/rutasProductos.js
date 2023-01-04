@@ -1,7 +1,9 @@
 const express = require("express");
 const { Router } = express;
 const Producto = require("../Utils/Producto.js")
-const MongoProductos = require("../Contenedores/ContenedorProductosMongo.js")
+const MongoProductos = require("../Contenedores/ContenedorProductosMongo.js");
+const { parse } = require("path");
+const { base } = require("../Models/modelProducto.js");
 
 const baseProductos = new MongoProductos()
 
@@ -33,13 +35,12 @@ app.use("/api/productos", routerProductos);
 
 routerProductos.get("/:id?", (req, res) => {
 
-    const cod = parseInt(req.params.id);
+    const cod = Number(req.params.id);
     if (cod) {
-        baseProductos.getById(cod)
+        res.json(baseProductos.getById(cod))
     } else {
-        baseProductos.getAll()
+        res.json(baseProductos.getAll())
     }
-
 });
 
 routerProductos.post("/", admin, (req, res) => {

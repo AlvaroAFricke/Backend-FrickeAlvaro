@@ -1,20 +1,17 @@
-const mongoose = require ('mongoose')
-const models = require ('../Models/modelProducto.js')
+const mongoose = require('mongoose')
+const productos = require('../Models/modelProducto.js')
+const models = require('../Models/modelProducto.js')
 
 class ContenedorProductosMongo {
 
     constructor() {
-        this.URL = "mongodb+srv://alviafricke%4gmail.com%3<alvi481152>@clusteralvi.cahy3u5.mongodb.net/ecommerce?retryWrites=true&w=majority"
-        mongoose.set({strictQuery:true})
-        this.connect = mongoose.createConnection(this.URL)
-        mongoose.connect(this.URL,{useNewUrlParser: true, useUnifiedTopology: true})
+        mongoose.set({ strictQuery: true })
+        this.connect = mongoose.connect('mongodb://localhost/ecommerce', { useNewUrlParser: true, useUnifiedTopology: true })
     }
 
     getAll() {
         try {
-            this.connect.then(()=>{
-                models.find()
-            })
+            console.log (productos.find({}))
         } catch (error) {
             console.log("Error en la lectura.");
             throw new Error("Error en la lectura.");
@@ -24,7 +21,7 @@ class ContenedorProductosMongo {
     //Borrado de todo
     deleteAll() {
         try {
-            this.connect.then(()=>{
+            this.connect.then(() => {
                 models.deleteMany('*')
             })
         } catch (error) {
@@ -44,17 +41,17 @@ class ContenedorProductosMongo {
         return Objeto.id;
     }
 
-    update(cod, Objeto){
+    update(cod, Objeto) {
         try {
-            models.updateOne({codigo: cod}, {Objeto})
+            models.updateOne({ codigo: cod }, { Objeto })
         } catch (error) {
-            
+
         }
     }
 
     getById(cod) {
         try {
-            models.find({codigo: cod})
+            return models.find({ codigo: cod })
         } catch (error) {
             throw new Error("Error en la busqueda por id.");
         }
@@ -62,7 +59,7 @@ class ContenedorProductosMongo {
 
     async deleteById(cod) {
         try {
-            models.deleteOne({codigo: cod})
+            models.deleteOne({ codigo: cod })
         } catch (error) {
             throw new Error("Error en el borrado por id.");
         }
