@@ -3,6 +3,7 @@ const { Router } = express;
 import Carrito from "../Utils/Carrito.js";
 import MongoCarritos from "../Contenedores/ContenedorCarritosMongo.js";
 import MongoProductos from "../Contenedores/ContenedorProductosMongo.js";
+import { Console } from "console";
 
 const baseProductos = new MongoProductos()
 const baseCarritos = new MongoCarritos()
@@ -74,8 +75,7 @@ routerCarrito.delete('/:idCar/productos/:idProd', async (req, res) => {
 
     const idProd = Number(req.params.idProd);
 
-    const actualizados = carrito.productos.filter((producto) => producto.codigo !== idProd)
-    carrito.productos = actualizados
+    carrito.productos = carrito.productos.filter((producto) => producto.codigo != idProd)
 
     await baseCarritos.update(idCar, carrito);
 
