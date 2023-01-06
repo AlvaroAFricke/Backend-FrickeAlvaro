@@ -1,16 +1,16 @@
-const fs = require("fs");
+import { writeFileSync, readFileSync, promises } from "fs";
 
 class ContenedorArchivo {
 
     constructor(nombreArchivo) {
         //Guardo el nombre del archivo
         this.archivo = nombreArchivo;
-        fs.writeFileSync(`../Archivos/${nombreArchivo}`, "[]");
+        writeFileSync(`../Archivos/${nombreArchivo}`, "[]");
     }
 
     getAll() {
         try {
-            let array = JSON.parse(fs.readFileSync(`../Archivos/${this.archivo}`, "utf-8"));
+            let array = JSON.parse(readFileSync(`../Archivos/${this.archivo}`, "utf-8"));
             return array;
         } catch (error) {
             console.log("Error en la lectura.");
@@ -21,7 +21,7 @@ class ContenedorArchivo {
     //Borrado de todo
     deleteAll() {
         try {
-            fs.writeFileSync(`../Archivos/${this.archivo}`, "[]");
+            writeFileSync(`../Archivos/${this.archivo}`, "[]");
             console.log("Todo limpio.");
         } catch (error) {
             throw new Error("Error en la limpieza.");
@@ -36,7 +36,7 @@ class ContenedorArchivo {
             array.push(Objeto);
 
             //Actualizo los datos del archivo
-            await fs.promises.writeFile(`../Archivos/${this.archivo}`, JSON.stringify(array));
+            await promises.writeFile(`../Archivos/${this.archivo}`, JSON.stringify(array));
             console.log("Agregado con exito.");
 
         } catch (error) {
@@ -64,7 +64,7 @@ class ContenedorArchivo {
 
         try {
             array = array.filter((item) => item.id !== number);
-            await fs.promises.writeFile(`../Archivos/${this.archivo}`, JSON.stringify(array));
+            await promises.writeFile(`../Archivos/${this.archivo}`, JSON.stringify(array));
         } catch (error) {
             return null;
         }
@@ -72,4 +72,4 @@ class ContenedorArchivo {
 
 }
 
-module.exports = ContenedorArchivo
+export default ContenedorArchivo

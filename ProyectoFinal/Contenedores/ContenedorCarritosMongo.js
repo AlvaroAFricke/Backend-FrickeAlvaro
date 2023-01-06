@@ -1,63 +1,67 @@
-const mongoose = require ('mongoose')
-const models = require ('../Models/modelCarrito.js')
+import { set, connect } from 'mongoose'
+import modelo from '../Models/modelCarrito.js'
 
 class ContenedorCarritosMongo {
 
     constructor() {
-        mongoose.set({strictQuery:true})
-        this.connect =  mongoose.connect('mongodb://localhost/ecommerce',{useNewUrlParser: true, useUnifiedTopology: true})
-    }
-
-    getAll() {
-        try {
-            this.connect.then(()=>{
-                models.find()
-            })
-        } catch (error) {
-            console.log("Error en la lectura.");
-            throw new Error("Error en la lectura.");
-        }
-    }
-
-    //Borrado de todo
-    deleteAll() {
-        try {
-            this.connect.then(()=>{
-                models.deleteMany('*')
-            })
-        } catch (error) {
-            throw new Error("Error en el borrado.");
-        }
+        set({strictQuery:true})
+        this.connect =  connect('mongodb://localhost/ecommerce',{useNewUrlParser: true, useUnifiedTopology: true})
     }
 
     async save(Objeto) {
         try {
-            models.insertMany(Objeto)
-            console.log("Agregado con exito.");
-
+            await modelo.insertMany(Objeto)
+            return Objeto.codigo;
         } catch (error) {
             throw new Error("Error en el agregado.");
         }
-
-        return Objeto.id;
     }
 
-    getById(cod) {
+    async getAll() {
         try {
-            models.find({codigo: cod})
+            const carrs = await modelo.find()
+            return carrs
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getById(cod) {
+        try {
+            const carr = await modelo.findOne({codigo: cod})
+            return carr
         } catch (error) {
             throw new Error("Error en la busqueda por id.");
         }
     }
 
+    async update(cod, Objeto) {
+        try {
+            await modelo.updateOne({codigo:cod}, 
+                {productos: Objeto.productos}
+                )
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    //Borrado de todo
+    async deleteAll() {
+        try {
+            await modelo.deleteMany({})
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     async deleteById(cod) {
         try {
-            models.deleteOne({codigo: cod})
+            await modelo.deleteOne({ codigo: cod })
         } catch (error) {
-            throw new Error("Error en el borrado por id.");
+            console.log(error)
         }
     }
 
 }
 
-module.exports = ContenedorCarritosMongo
+export default ContenedorCarritosMongo

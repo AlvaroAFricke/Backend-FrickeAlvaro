@@ -1,11 +1,11 @@
 //Imports
-const express = require('express')
+import express from 'express'
 const app = express()
 
 //Dependencias de la app
 
-const rutasCarritos = require("./Rutas/rutasCarritos")
-const rutasProductos = require("./Rutas/rutasProductos")
+import rutasCarritos from "./Rutas/rutasCarritos.js"
+import rutasProductos from "./Rutas/rutasProductos.js"
 app.use(rutasCarritos)
 app.use(rutasProductos)
 

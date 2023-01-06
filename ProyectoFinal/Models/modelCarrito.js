@@ -1,12 +1,13 @@
-const mongoose = require('mongoose') 
+import { Schema, model } from 'mongoose' 
 
 const carritosCollName = 'carritos'
 
-const carritosSchema = new mongoose.Schema({
+const carritosSchema = new Schema({
+    codigo: {type: Number, require: true, unique: true},
     time: {type: Date, required: true},
     productos: {type: Array, required: true}
 })
 
-const carritos = mongoose.model(carritosCollName, carritosSchema)
+const carritos = model(carritosCollName, carritosSchema)
 
-module.exports = carritos
+export default carritos

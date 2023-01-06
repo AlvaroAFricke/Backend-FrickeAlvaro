@@ -1,16 +1,14 @@
-const express = require("express");
+import express, { json, urlencoded } from "express";
 const { Router } = express;
-const Producto = require("../Utils/Producto.js")
-const MongoProductos = require("../Contenedores/ContenedorProductosMongo.js");
-const { parse } = require("path");
-const { base } = require("../Models/modelProducto.js");
+import Producto from "../Utils/Producto.js";
+import MongoProductos from "../Contenedores/ContenedorProductosMongo.js";
 
 const baseProductos = new MongoProductos()
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 
 const routerProductos = new Router();
 
@@ -33,14 +31,15 @@ app.use("/api/productos", routerProductos);
  * Rutas de productos
  */
 
-routerProductos.get("/:id?", (req, res) => {
+routerProductos.get("/:id?", async (req, res) => {
 
     const cod = Number(req.params.id);
     if (cod) {
-        res.json(baseProductos.getById(cod))
+        res.json(await baseProductos.getById(cod))
     } else {
-        res.json(baseProductos.getAll())
+        res.json(await baseProductos.getAll())
     }
+
 });
 
 routerProductos.post("/", admin, (req, res) => {
@@ -59,29 +58,26 @@ routerProductos.post("/", admin, (req, res) => {
 
 });
 
-routerProductos.put("/:id", admin, (req, res) => {
+routerProductos.put("/:id", admin, async (req, res) => {
 
-    const cod = parseInt(req.params.id);
-    const actualizado = new Producto()
-
-    actualizado.nombre = req.body.nombre;
-    actualizado.descripcion = req.body.descripcion;
-    actualizado.imagen = req.body.imagen;
-    actualizado.precio = req.body.precio;
-    actualizado.stock = req.body.stock;
-
-    baseProductos.update(cod, actualizado);
+    const cod = Number(req.params.id);
+    await baseProductos.update(cod, req.body);
 
     res.json({Actualizado: 'OK'})
 
 });
 
-routerProductos.delete("/:id", admin, (req, res) => {
+routerProductos.delete("/:id?", admin, async (req, res) => {
 
-    const cod = parseInt(req.params.id);
-    baseProductos.deleteById(cod)
-    res.json({ Borrado: 'OK' })
+    const cod = Number(req.params.id);
+    if (cod) {
+        await baseProductos.deleteById(cod)
+        res.json({Borrado: "OK"})
+    } else {
+        await baseProductos.deleteAll()
+        res.json({Borrado: "OK"})
+    }
 
 });
 
-module.exports = app
+export default app

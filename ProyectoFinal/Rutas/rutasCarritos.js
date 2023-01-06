@@ -1,14 +1,16 @@
-const express = require("express");
+import express, { json, urlencoded } from "express";
 const { Router } = express;
-const Carrito = require("../Utils/Carrito.js");
-const MongoCarritos = require("../Contenedores/ContenedorCarritosMongo.js")
+import Carrito from "../Utils/Carrito.js";
+import MongoCarritos from "../Contenedores/ContenedorCarritosMongo.js";
+import MongoProductos from "../Contenedores/ContenedorProductosMongo.js";
 
+const baseProductos = new MongoProductos()
 const baseCarritos = new MongoCarritos()
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 
 const routerCarrito = new Router();
 
@@ -19,64 +21,66 @@ app.use("/api/carritos", routerCarrito);
  * Rutas de Carrito
  */
 
-routerCarrito.get("/:id/productos", (req, res) => {
+routerCarrito.get("/:id?/productos", async (req, res) => {
 
-    const id = parseInt(req.params.id);
-    const carro = baseCarritos.getById(id)
-
-    res.json(carro.productos);
+    const cod = Number(req.params.id);
+    if (cod) {
+        const carrito = await baseCarritos.getById(cod)
+        res.json(carrito.productos)
+    } else {
+        res.json(await baseCarritos.getAll())
+    }
 
 });
 
-routerCarrito.post("/", (req, res) => {
+routerCarrito.post("/", async (req, res) => {
 
     const carrito = new Carrito();
-    baseCarritos.save(carrito);
-    res.json({CarroAgregado:carrito.getId()});
+    res.json(await baseCarritos.save(carrito))
 
 });
 
-routerCarrito.post('/:idCar/productos/:idProd', (req,res) => {
+routerCarrito.post('/:idCar/productos/:idProd', async (req,res) => {
 
-    const idCar = parseInt(req.params.idCar);
-    const carrito = baseCarritos.getById(idCar)
+    const idCar = Number(req.params.idCar);
+    const carrito = await baseCarritos.getById(idCar)
 
-    const productos = carrito.productos
+    const idProd = Number(req.params.idProd);
+    carrito.productos.push(await baseProductos.getById(idProd))
 
-    const idProd = parseInt(req.params.idProd);
-    const producto = productos.find( prod => prod.id == idProd ) 
-
-    carrito.productos.push(producto)
-
-    baseCarritos.save(carrito);
+    await baseCarritos.update(idCar, carrito);
 
     res.json({ProductoAgregado:'OK'})
 
 });
 
-routerCarrito.delete("/:id/productos", (req, res) => {
+routerCarrito.delete("/:id?/productos", async (req, res) => {
 
-    const id = parseInt(req.params.id);
-
-    baseCarritos.deleteById(id)
-
-    res.json({ Borrado: 'OK' })
+    const cod = Number(req.params.id);
+    if (cod) {
+        await baseCarritos.deleteById(cod)
+        res.json({Borrado: "OK"})
+    } else {
+        await baseCarritos.deleteAll()
+        res.json({Borrado: "OK"})
+    }
 
 });
 
-routerCarrito.delete('/:idCar/productos/:idProd', (req, res) => {
+routerCarrito.delete('/:idCar/productos/:idProd', async (req, res) => {
     
-    const idCar = parseInt(req.params.idCar);
-    const carrito = baseCarritos.getById(idCar)
+    const idCar = Number(req.params.idCar);
+    const carrito = await baseCarritos.getById(idCar)
 
-    const idProd = parseInt(req.params.idProd);
+    const idProd = Number(req.params.idProd);
 
-    carrito.productos = carrito.productos.filter((prod) => prod.idProd !== idProd)
+    const actualizados = carrito.productos.filter((producto) => producto.codigo !== idProd)
+    carrito.productos = actualizados
 
-    baseCarritos.save(carrito);
+    await baseCarritos.update(idCar, carrito);
 
     res.json({ProductoEliminado:'OK'})
 
 });
 
-module.exports = app;
+export default app;

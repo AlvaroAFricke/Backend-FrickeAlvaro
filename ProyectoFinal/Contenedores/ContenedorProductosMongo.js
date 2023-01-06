@@ -1,70 +1,71 @@
-const mongoose = require('mongoose')
-const productos = require('../Models/modelProducto.js')
-const models = require('../Models/modelProducto.js')
+import { set, connect, model } from 'mongoose'
+import modelo from '../Models/modelProducto.js'
 
 class ContenedorProductosMongo {
 
     constructor() {
-        mongoose.set({ strictQuery: true })
-        this.connect = mongoose.connect('mongodb://localhost/ecommerce', { useNewUrlParser: true, useUnifiedTopology: true })
+        set({ strictQuery: true })
+        this.connect = connect('mongodb://localhost/ecommerce', { useNewUrlParser: true, useUnifiedTopology: true })
     }
 
-    getAll() {
+    async getAll() {
         try {
-            console.log (productos.find({}))
+            const prods = await modelo.find()
+            return prods
         } catch (error) {
-            console.log("Error en la lectura.");
-            throw new Error("Error en la lectura.");
+            console.log(error);
         }
     }
 
-    //Borrado de todo
-    deleteAll() {
+    async getById(cod) {
         try {
-            this.connect.then(() => {
-                models.deleteMany('*')
-            })
+            const prod = await modelo.findOne({codigo: cod})
+            return prod
         } catch (error) {
-            throw new Error("Error en el borrado.");
+            console.log(error);
         }
     }
 
     async save(Objeto) {
         try {
-            models.insertMany(Objeto)
-            console.log("Agregado con exito.");
-
+            await modelo.insertMany(Objeto)
         } catch (error) {
-            throw new Error("Error en el agregado.");
+            console.log(error);
         }
-
         return Objeto.id;
     }
 
-    update(cod, Objeto) {
+    async update(cod, Objeto) {
         try {
-            models.updateOne({ codigo: cod }, { Objeto })
+            await modelo.updateOne({ codigo: cod }, { 
+                nombre: Objeto.nombre,
+                descripcion: Objeto.descripcion,
+                imagen: Objeto.imagen,
+                precio: Objeto.precio,
+                stock: Objeto.stock
+            })
         } catch (error) {
-
+            console.log(error);
         }
     }
 
-    getById(cod) {
+    //Borrado de todo
+    async deleteAll() {
         try {
-            return models.find({ codigo: cod })
+            await modelo.deleteMany({})
         } catch (error) {
-            throw new Error("Error en la busqueda por id.");
+            console.log(error);
         }
     }
 
     async deleteById(cod) {
         try {
-            models.deleteOne({ codigo: cod })
+            await modelo.deleteOne({ codigo: cod })
         } catch (error) {
-            throw new Error("Error en el borrado por id.");
+            console.log(error)
         }
     }
 
 }
 
-module.exports = ContenedorProductosMongo
+export default ContenedorProductosMongo

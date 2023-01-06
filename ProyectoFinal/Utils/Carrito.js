@@ -1,11 +1,11 @@
 class Carrito{
 
-    static idGeneral = 0
+    static codigo = 0
 
     constructor() {
 
-        Carrito.idGeneral++
-        this.id = Carrito.idGeneral
+        Carrito.codigo++
+        this.codigo = Carrito.codigo
         this.time = Date.now()
 
         this.productos = new Array()
@@ -13,9 +13,9 @@ class Carrito{
     }
 
     getId(){
-        return this.id
+        return this.codigo
     }
 
 }
 
-module.exports = Carrito
+export default Carrito
