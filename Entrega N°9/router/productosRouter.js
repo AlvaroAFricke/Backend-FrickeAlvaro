@@ -1,8 +1,6 @@
 import express from 'express'
 import ApiProductosMock from '../api/productos.js'
 
-const productos = []
-
 class ProductosRouter extends express.Router {
     constructor() {
         super()
@@ -20,8 +18,7 @@ class ProductosRouter extends express.Router {
 
         this.get('/', async (req, res, next) => {
             try {
-                res.render('index', {productos, productos})
-                res.json(await apiProductos.getAll())
+                res.render('index', {productos: apiProductos.getAll()})
             } catch (error) {
                 next(error)
             }

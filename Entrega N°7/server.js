@@ -32,6 +32,8 @@ io.on('connection', async (socket) =>{
     console.log('Conectado')
 
     //Enviar Productos
+
+    
     socket.emit('productos', await sqlProductos.listarArticulos())
 
     //Enviar Mensajes

@@ -10,7 +10,6 @@ class ApiProductosMock extends Contenedor {
         const productos = []
         for (let i = 0; i < cant; i++) {
             const prodNuevo = generarProducto()
-            this.save(prodNuevo)
             productos.push(prodNuevo)
         }
         return productos
