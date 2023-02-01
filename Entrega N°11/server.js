@@ -161,7 +161,65 @@ app.get('/', (req, res) => {
     res.redirect('/index')
 })
 
-const PORT = 8080
+//---------------------//
+// Ruta calculaRandom //
+//-------------------//
+
+import { fork } from 'child_process'
+
+app.get('/api/random?:cant', (req, res) => {
+    const calculo = fork(path.resolve(process.cwd()+'/api/', 'calculaRandom.js'))
+    calculo.on('message', () => {
+
+        const cant = req.query.cant
+
+        if (isNaN(cant)) {
+            calculo.send(100000)
+        }else{
+            calculo.send(cant)
+        }
+
+    })
+    res.json({Listo: 'Ok'})
+})
+
+//------------//
+// Ruta info //
+//----------//
+
+app.get('/info', (req, res) =>{
+
+    const info = {
+        Argumentos: process.argv.slice(2),
+        SO: process.platform,
+        Version: process.version,
+        PID: process.pid,
+        Path: process.execPath,
+        Ejecucion: process.cwd(),
+        Memoria: process.memoryUsage()
+    }
+
+    res.json(info)
+
+})
+
+//------------------------//
+// Argumentos x Minimist //
+//----------------------//
+
+import parseArgs from 'minimist'
+
+const config = {
+    alias: {
+        p: 'PORT'
+    },
+    default: {
+        PORT: 8080
+    }
+}
+
+const {PORT} = parseArgs(process.argv.slice(2), config)
+
 app.listen(PORT, () => {
-    console.log(`Corriendo ...`)
+    console.log(`Corriendo ${PORT} ...`)
 })
