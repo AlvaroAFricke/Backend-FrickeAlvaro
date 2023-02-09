@@ -1,0 +1,27 @@
+//----------//
+// forever //
+//--------//
+
+Inicio del servidor en forever
+
+forever start server.js 
+
+Listar servidores forever
+
+forever list
+
+//------//
+// pm2 //
+//----//
+
+Iniciar el servidor en pm2, modo fork
+
+pm2 start server.js --name modeFork
+
+Iniciar el servidor en pm2, modo cluster
+
+pm2 start server.js --name modeCluster --watch -i max
+
+Listar en pm2
+
+pm2 list
