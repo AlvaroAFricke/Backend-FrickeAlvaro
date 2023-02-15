@@ -2,12 +2,8 @@
 // forever //
 //--------//
 
-Inicio del servidor en forever
 
 forever start server.js 
-
-Listar servidores forever
-
 forever list
 
 //------//
