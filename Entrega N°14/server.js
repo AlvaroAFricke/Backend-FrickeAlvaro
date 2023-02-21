@@ -189,9 +189,11 @@ app.get('/api/random-deb?:cant', (req, res) => {
 
 app.get('/api/random?:cant', (req, res) => {
 
+    const randoms = new Array
+
     function calculo(cant) {
         for (let i = 0; i < cant; i++) {
-            res.json({i:Math.round(Math.random() * 1000)})
+            randoms.push(Math.round(Math.random() * 1000))
         }
     }
 
@@ -203,7 +205,8 @@ app.get('/api/random?:cant', (req, res) => {
         calculo(cant)
     }
 
-    res.json({ Listo: 'Ok' })
+    res.json(randoms)
+
 })
 
 //-----------------//
@@ -237,7 +240,9 @@ app.get('/info', (req, res) => {
 
     logger.info('Todo Ok')
 
-    res.json(info)
+    const informacion = JSON.stringify(info)
+
+    res.json(informacion.repeat(50))
 
 })
 
@@ -264,7 +269,9 @@ app.get('/info-gzip', compression(), (req, res) => {
 
     logger.info('Todo Ok')
 
-    res.json(info)
+    const informacion = JSON.stringify(info)
+
+    res.json(informacion.repeat(50))
 
 })
 

@@ -18,5 +18,5 @@ function run(url) {
 
 console.log("Corriendo el brenchmark ...");
 
-run("http://localhost:8080/api/random?cant=100")
+run('http://localhost:8080/api/random?cant=100')
 run("http://localhost:8080/api/random-deb?cant=100")

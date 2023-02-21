@@ -5,19 +5,27 @@
 
 forever start server.js 
 forever list
+forever stopall
 
 //------//
 // pm2 //
 //----//
 
-Iniciar el servidor en pm2, modo fork
 
-pm2 start server.js --name modeFork
 
-Iniciar el servidor en pm2, modo cluster
+pm2 start server.js --name modeFork --watch -- -p8081
+pm2 start server.js --name modeCluster -i max --watch -- -p 8082
+pm2 start server.js --name modeCluster -i 4 --watch -- -p 8080
 
-pm2 start server.js --name modeCluster --watch -i max
-
-Listar en pm2
+pm2 delete all 
 
 pm2 list
+pm2 stop 
+pm2 restart
+pm2 delete
+
+//SO Linux Ubuntu
+
+sudo systemctl start nginx
+sudo systemctl status nginx
+sudo systemctl stop nginx

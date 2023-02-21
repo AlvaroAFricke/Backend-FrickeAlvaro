@@ -1,12 +1,12 @@
 {
-  "name": "2-ejercicio-2",
+  "name": "entrega14",
   "version": "1.0.0",
   "description": "",
   "type": "module",
   "main": "server.js",
   "scripts": {
     "test": "node benchmark.js",
-    "start": "0x server.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
