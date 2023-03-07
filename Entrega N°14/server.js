@@ -298,31 +298,13 @@ const config = {
 
 const { PORT } = parseArgs(process.argv.slice(2), config)
 
-//-----------//
-// Clusters //
-//---------//
+app.listen(PORT, (err) => {
 
-import cluster from 'cluster'
-
-if (cluster.isPrimary) {
-
-    logger.info(`PID number: ${process.pid}`)
-
-    for (let i = 0; i < numCPUs; i++) {
-        cluster.fork()
+    if (err) {
+        logger.error('Error al iniciar el servidor')
     }
-
-    cluster.on('exit', worker => {
-        logger.info(`Worker ${worker.process.pid} died: ${new Date().toString()}`)
-        cluster.fork()
+    logger.info('Servidor corriendo ...')
+    app.get('/*', (req, res) =>{
+        res.redirect('/login')
     })
-} else {
-
-    app.listen(PORT, (err) => {
-
-        if (err) {
-            logger.error('Error al iniciar el servidor')
-        }
-        logger.info('Servidor corriendo ...')
-    })
-}
+})

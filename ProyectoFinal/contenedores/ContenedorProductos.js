@@ -1,16 +1,18 @@
 import { set, connect } from 'mongoose'
-import modelo from '../modelos/modelProducto.js'
+import modelo from '../models/modelProducto.js'
 
 class ContenedorProductosMongo {
 
     constructor() {
+
         set({ strictQuery: true })
-        this.connect = connect('mongodb+srv://alviafricke:pruebamongo@baseprueba.uuv5218.mongodb.net/Productos', { useNewUrlParser: true, useUnifiedTopology: true })
+        this.connect = connect('mongodb+srv://alvi:basealvi@proyectofinal.uj7wmlq.mongodb.net/ecommerce', { useNewUrlParser: true, useUnifiedTopology: true })
+
     }
 
     async getAll() {
         try {
-            const prods = await modelo.find()
+            const prods = await collection.find()
             return prods
         } catch (error) {
             console.log(error);
@@ -19,7 +21,7 @@ class ContenedorProductosMongo {
 
     async getById(cod) {
         try {
-            const prod = await modelo.findOne({codigo: cod})
+            const prod = await modelo.findOne({ codigo: cod })
             return prod
         } catch (error) {
             console.log(error);
@@ -37,11 +39,12 @@ class ContenedorProductosMongo {
 
     async update(cod, Objeto) {
         try {
-            await modelo.updateOne({ codigo: cod }, { 
+            await modelo.updateOne({ codigo: cod }, {
                 nombre: Objeto.nombre,
                 descripcion: Objeto.descripcion,
                 imagen: Objeto.imagen,
                 precio: Objeto.precio,
+                stock: Objeto.stock
             })
         } catch (error) {
             console.log(error);
