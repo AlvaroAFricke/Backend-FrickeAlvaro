@@ -7,15 +7,22 @@ import views from 'koa-views';
 import productosRouter from './routes/productos.js';
 import usuariosRouter from './routes/usuarios.js';
 
-import passport from 'koa-passport'; // Importa el middleware koa-passport
-import session from 'koa-session'; // Importa el middleware koa-session
+import session from 'koa-session';
+import passport from 'passport';
 
 const app = new Koa();
+app.use(bodyParser());
+
+// Configurar sesiones y body parser
+app.keys = ['secret-key'];
+app.use(session({}, app));
+
+import './controller/authController.js'
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Obtener la ruta del directorio de vistas
 const viewsDir = path.join(path.dirname(new URL(import.meta.url).pathname), 'views');
-
-app.use(bodyParser());
 
 // Configurar motor de plantillas
 app.use(
@@ -23,13 +30,6 @@ app.use(
     extension: 'ejs',
   })
 );
-
-// Configura el middleware koa-passport
-app.use(passport.initialize()); // Inicializa el middleware de passport
-app.use(passport.session()); // Utiliza el middleware de sesiones de passport
-// Configurar el middleware de sesión
-app.keys = ['clave-de-sesion']; // Cambia esto por una clave secreta para tus sesiones
-app.use(session(app));
 
 // Rutas de productos
 app.use(productosRouter.routes());

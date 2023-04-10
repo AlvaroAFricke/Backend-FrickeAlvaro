@@ -1,4 +1,4 @@
-import passport from "koa-passport";
+import passport from 'passport';
 import User from "../persistence/dbMongo/UserMongo.js";
 
 const dbUser = new User();
@@ -25,19 +25,15 @@ export async function register(ctx) {
     ctx.redirect("/api/productos");
 }
 
-export const login = async (ctx, next) => {
-    await passport.authenticate("local", async (err, user) => {
-        if (err || !user) {
-            ctx.throw(401, "Invalid credentials");
-        }
-
-        await ctx.login(user);
-        ctx.body = { message: "Logged in successfully" };
-    })(ctx, next);
+export const login = async () => {
+    passport.authenticate('local', {
+        successRedirect: '/api/productos', // Redireccionar a la página de inicio después de un login exitoso
+        failureRedirect: '/login', // Redireccionar a la página de login en caso de fallo de autenticación
+    })
 };
 
 export const logout = async (ctx) => {
     await ctx.logout();
-    ctx.body = { message: 'Logged out successfully' };
+    ctx.redirect('/login')
 };
 

@@ -1,13 +1,7 @@
-import session from 'koa-session';
-
-// Configura la clave secreta para firmar las cookies de sesión
-const keys = ['clave-secreta'];
-
-// Opciones de configuración para el middleware de sesiones
-const sessionConfig = {
-  key: 'mi-app:sess', // Nombre de la cookie de sesión
-  maxAge: 3600000, // Tiempo de vida de la cookie de sesión en milisegundos
+export const isAuthenticated = async (ctx, next) => {
+  if (ctx.isAuthenticated()) {
+    await next();
+  } else {
+    ctx.redirect('/login');
+  }
 };
-
-// Configura y exporta el middleware de sesiones
-export const sessionMiddleware = session(sessionConfig, keys);
