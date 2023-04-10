@@ -11,9 +11,9 @@
 
         <div class="container my-1">
             <div class="jumbotron" style="background-color: cadetblue;">
-                <h2>Bienvenido <%= datos.nombre %>
+                <h2>Bienvenido
                 </h2>
-                <h3>Direccion: <%= datos.correo %>
+                <h3>Direccion:
                 </h3>
                 <button class="btn btn-danger my-2" onclick="location.href='/logout'">LOGOUT</button>
             </div>
@@ -26,7 +26,7 @@
 
             <!-- Formulario para el ingreso de productos -->
 
-            <form id="formularioProductos">
+            <form id="formularioProductos" action="/api" method="post">
                 <div class="form-group">
                     <label for="nombre"><b>Nombre</b></label>
                     <input id="nombre" class="form-control" type="text" name="nombre" />
@@ -49,10 +49,6 @@
 
                 <button id="enviar" type="submit" class="btn btn-success mt-3 mb-5">
                     Enviar
-                </button>
-
-                <button id="test" type="submit" class="btn btn-success mt-3 mb-5">
-                    Testear
                 </button>
 
             </form>

@@ -1,9 +1,18 @@
 import logger from '../utils/logger.js'
-import dbProductos from '../persistence/containers/ContenedorProductos.js'
+import ContenedorMongo from '../persistence/containers/ContenedorProductos.js'
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const dbProductos = new ContenedorMongo();
 
 const guardar = async (req, res) => {
     try {
-        res.send(await dbProductos.save(req.body))
+        console.log(req.body.nombre);
+        await dbProductos.save(req.body)
+        res.redirect('/listar')
     } catch (error) {
         logger.error('Error.' + error)
     }
@@ -30,7 +39,7 @@ const listar = async (req, res) => {
 
 const listarTodo = async (req, res) => {
     try {
-        res.render('index', {productos: await dbProductos.getAll()})
+        res.render(path.join(__dirname, '../public', 'index.ejs'), {productos: await dbProductos.getAll()})
     } catch (error) {
         logger.error('Error.' + error)
     }

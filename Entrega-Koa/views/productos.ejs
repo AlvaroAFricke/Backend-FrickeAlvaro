@@ -1,0 +1,26 @@
+<!-- En tu archivo EJS (productos.ejs) -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Productos</title>
+</head>
+<body>
+  <h1>Bienvenido</h1>
+  <h2>Lista de productos:</h2>
+  <!-- Mostrar la lista de productos -->
+  <ul>
+    <% productos.forEach(producto => { %>
+      <li>
+        <strong>Nombre:</strong> <%= producto.nombre %><br>
+        <strong>Descripción:</strong> <%= producto.descripcion %><br>
+        <strong>Precio:</strong> <%= producto.precio %><br>
+        <strong>Imagen:</strong> <%= producto.imagen %>
+      </li>
+    <% }) %>
+  </ul>
+  <!-- Agregar el botón de logout -->
+  <form action="/logout" method="get">
+    <input type="submit" value="Logout">
+  </form>
+</body>
+</html>

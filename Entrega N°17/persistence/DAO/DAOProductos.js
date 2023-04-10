@@ -7,14 +7,13 @@ let instance;
 class DAOProductos  {
     constructor(){
 
-        const baseProductos = new MyMongoClient();
-        baseProductos.connect("Productos");
+        const baseProductos = new MyMongoClient("productos")
 
     }
 
     async getAll() {
         try {
-            const prods = await modelo.find()
+            const prods = await this.baseProductos.find()
             return prods
         } catch (error) {
             logger.error(error)

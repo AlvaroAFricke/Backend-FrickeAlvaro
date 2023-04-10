@@ -1,5 +1,7 @@
 import logger from '../utils/logger.js'
-import dbProductos from '../persistence/Use/UseProductos.js'
+import UseProductos from '../persistence/Use/UseProductos.js'
+
+const dbProductos = new UseProductos();
 
 const guardar = async (req, res) => {
     try {

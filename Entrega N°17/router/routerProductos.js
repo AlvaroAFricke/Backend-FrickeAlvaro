@@ -4,14 +4,14 @@ import auth from './authorized/auth.js'
 
 const routerProductos = Router()
 
-routerProductos.get('/', auth.requireAuthentication, prodController.listarTodo)
+routerProductos.get('/', prodController.listarTodo)
 
-routerProductos.get('/:id', auth.requireAuthentication, prodController.listar)
+routerProductos.get('/:id', prodController.listar)
 
-routerProductos.put('/:id', auth.requireAuthentication, prodController.modificar)
+routerProductos.put('/:id', prodController.modificar)
 
-routerProductos.post('/', auth.requireAuthentication, prodController.guardar)
+routerProductos.post('/', prodController.guardar)
 
-routerProductos.delete('/:id?', auth.requireAuthentication, prodController.borrar)
+routerProductos.delete('/:id?', prodController.borrar)
 
 export default routerProductos

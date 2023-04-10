@@ -5,6 +5,7 @@ class DAOFileProducto {
     constructor() {
         //Guardo el nombre del archivo
         this.archivo = "Productos.txt";
+        const nombreArchivo = "productos.txt"
         fs.writeFileSync(`./${nombreArchivo}`, "[]");
     }
 

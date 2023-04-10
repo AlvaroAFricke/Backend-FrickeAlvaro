@@ -4,9 +4,9 @@ import Config from "../config/config.js"
 import logger from "../../utils/logger.js"
 
 class MyMongoClient extends DbClient {
-    constructor(){
+    constructor(coll){
         super()
-        this.connect = false
+        this.connect(coll)
         this.client = mongoose
     }
 

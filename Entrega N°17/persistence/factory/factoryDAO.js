@@ -1,5 +1,5 @@
-import DAOFileProducto from "../DAO/DAOFileProductos";
-import DAOProductos from "../DAO/DAOProductos";
+import DAOFileProducto from "../DAO/DAOFileProductos.js";
+import DAOProductos from "../DAO/DAOProductos.js";
 
 class FactoryDAO {
     constructor(data){

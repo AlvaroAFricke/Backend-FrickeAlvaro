@@ -1,5 +1,5 @@
 import session from 'express-session'
-import dbUsuarios from '../persistence/containers/ContenedorUsuarios.js'
+import dbUsuarios from '../persistence/Use/UseUsuarios.js'
 import logger from "../utils/logger.js";
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'

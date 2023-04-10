@@ -6,7 +6,7 @@ const config = {
         t: 'tipo',
     },
     default: {
-        tipo: archivo,
+        tipo: 'mongo',
     }
 }
 

@@ -32,10 +32,15 @@ app.listen(PORT, (err) => {
     if (err) {
         logger.error('Error al iniciar el servidor')
     }
+    
     logger.info('Servidor corriendo ...')
+
+    app.set('view engine', 'ejs');
+
     app.get('/*', (req, res) =>{
         res.send("Error")
     })
+
 })
 
 export default {

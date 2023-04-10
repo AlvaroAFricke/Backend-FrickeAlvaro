@@ -7,6 +7,8 @@ import logger from './utils/logger.js'
 import parseArgs from 'minimist'
 import configuracion from './utils/parametros.js'
 
+import ejs from 'ejs'
+
 const app = express()
 
 /**
@@ -33,12 +35,9 @@ app.listen(PORT, (err) => {
         logger.error('Error al iniciar el servidor')
     }
     logger.info('Servidor corriendo ...')
+    app.set('view engine', 'ejs');
     app.get('/*', (req, res) =>{
         res.send("Error")
     })
 })
-
-export default {
-    app
-}
 
