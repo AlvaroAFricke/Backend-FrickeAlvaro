@@ -9,6 +9,7 @@ import usuariosRouter from './routes/usuarios.js';
 
 import session from 'koa-session';
 import passport from 'passport';
+import { isAuth } from './controller/userController.js';
 
 const app = new Koa();
 app.use(bodyParser());
@@ -17,7 +18,7 @@ app.use(bodyParser());
 app.keys = ['secret-key'];
 app.use(session({}, app));
 
-import './controller/authController.js'
+app.use(isAuth)
 app.use(passport.initialize());
 app.use(passport.session());
 
